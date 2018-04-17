@@ -14,7 +14,8 @@ var dateObject = new Date();
 var countdown;
 var ticket = {
         passengersOnTicket: 0,
-        passengers: {}
+        passengers: {},
+        calcCost: updateTotalCost
     };
 
 function displayCalendar(whichMonth) {
@@ -103,7 +104,6 @@ function selectDate(event) {
     }
     document.getElementById("tripDate").value = dateObject.toLocaleDateString();
     hideCalendar();
-    updateTotalCost();
     countdown = setInterval(updateCountdown, 1000);
     document.getElementById("countdownSection").style.display = "block";
     document.getElementById("ticket").style.display = "block";
@@ -124,7 +124,7 @@ function nextMo() {
 }
 
 function updateTotalCost() {
-    var totalCost = 250000;
+    var totalCost = this.passengersOnTicket * 250000;
     var monthlyCost = totalCost / 60;
     var shortMonthlyCost = monthlyCost.toFixed(0);
     document.getElementById("singleLabel").innerHTML = "Single payment of $" + totalCost.toLocaleString();
@@ -190,6 +190,7 @@ function registerName() {
     // return focus to First Name field to facilitate entry of
     // another passenger name
     document.getElementById("fname").focus();
+    ticket.calcCost();
 }
 
 function createEventListeners() {
