@@ -13,12 +13,9 @@
 var dateObject = new Date();
 var countdown;
 var ticket = {
-    date: "",
-    passengers: {
-    fName: "",
-    lName: ""
-    }
-};
+        passengersOnTicket: 0,
+        passengers: {}
+    };
 
 function displayCalendar(whichMonth) {
     var date;
@@ -173,11 +170,16 @@ function updateCountdown() {
 function registerName() {
     var passengerList = document.getElementById("passengers");
     var passengerName = document.createElement("li");
+    var newFnameProp;
+    var newLnameProp;
+    ticket.passengersOnTicket += 1;
+    newFnameProp = "fname" + ticket.passengersOnTicket;
+    newLnameProp = "lname" + ticket.passengersOnTicket;
     // add first+last names to ticket object as new properties
-    ticket.passengers.fName = document.getElementById("fname").value;
-    ticket.passengers.lName = document.getElementById("lname").value;
+    ticket.passengers[newFnameProp] = document.getElementById("fname").value;
+    ticket.passengers[newLnameProp] = document.getElementById("lname").value;
     // add entered name to passenger list in ticket section
-    passengerName.innerHTML = ticket.passengers.fName + " " + ticket.passengers.lName;
+    passengerName.innerHTML = ticket.passengers[newFnameProp] + " " + ticket.passengers[newLnameProp];
     passengerList.appendChild(passengerName);
     // clear first and last names from form
     document.getElementById("fname").value = "";
